@@ -35,8 +35,11 @@ const Preview = ({
   const [zoomLevel, setZoomLevel] = useState(1);
   const [schemasList, setSchemasList] = useState<SchemaForUI[][]>([[]] as SchemaForUI[][]);
 
-  const { backgrounds, pageSizes, scale, error, refresh } =
-    useUIPreProcessor({ template, size, zoomLevel });
+  const { backgrounds, pageSizes, scale, error, refresh } = useUIPreProcessor({
+    template,
+    size,
+    zoomLevel,
+  });
 
   const isForm = Boolean(onChangeInput);
 
@@ -114,7 +117,9 @@ const Preview = ({
           backgrounds={backgrounds}
           renderSchema={({ schema, index }) => {
             const { name, readOnly } = schema;
-            const content = readOnly ? String(schema.content) || '' : String(input && input[name] || '');
+            const content = readOnly
+              ? String(schema.content) || ''
+              : String((input && input[name]) || '');
             return (
               <Renderer
                 key={schema.id}
@@ -148,7 +153,7 @@ const Preview = ({
                   if (isNeedInit) {
                     init(template);
                   }
-                  setSchemasList([...schemasList])
+                  setSchemasList([...schemasList]);
                 }}
                 outline={
                   isForm && !schema.readOnly ? `1px dashed ${token.colorPrimary}` : 'transparent'
